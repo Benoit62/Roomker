@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../css/planning.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+        <style>
+            .eachHour{
+                height: 15px;
+                border: 1px solid #CE917B;
+                width: 100px;
+                border-radius: 5px;
+            margin-bottom: 5px;
+            color: #fff;
+            background-color: #CE917B;
+            box-shadow: 0 2px 2px rgba(0,0,0,0.10), 0 2px 2px rgba(0,0,0,0.16);
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            }
+
+            .eachHour:hover{
+                border: 1px solid #9b6d5c;
+                background-color: #9b6d5c;
+            }
+
+            .eachHourLabel{
+                height: 15px;
+                border: 1px solid #CE917B;
+                width: 40px;
+                text-align: center;
+                border-radius: 5px;
+                margin-bottom: 5px;
+                background-color: #CE917B;
+                box-shadow: 0 2px 2px rgba(0,0,0,0.10), 0 2px 2px rgba(0,0,0,0.16);
+                font-family: 'Poppins', sans-serif;
+                font-weight: 700;
+                font-family: 'Poppins', sans-serif;
+                color: #fff;
+            }
+
+            .eachHourLabel:hover{
+                border: 1px solid #9b6d5c;
+                background-color: #9b6d5c;
+            }
+            
+            .eachHourLabel td{
+                width: inherit;
+            }
+            .p{
+                margin: 3% 1%;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body style="margin: 0;">
+        <canvas oncontextmenu="return false;" id="myCanvas" style="margin: auto;"></canvas><!--width="900" height="500"-->
+        <div id="bulleInfo">
+            <a onclick="hideSalle();" class="delete">x</a>
+            <div style="width:90%; display: flex; justify-content: space-around;"><p class="p">Salle <span id="name"></span></p><p class="p"> <span id="nb"></span> places</p></div>
+            <div style="width:90%;"><p class="p">Vidéo projecteur <span id="proj"></span></p></div>
+            <div style="width:90%;"><p class="p" id="day"></p></div>
+            <div class="container_planning">
+                <table>
+                    <tbody id="arrayPlanningLabel">
+                        <!--<tr class="eachHourLabel"><td><div>7:00</div></td></tr>
+                        <tr class="eachHourLabel"><td><div>7:30</div></td></tr>
+                        <tr class="eachHourLabel"><td><div>8:00</div></td></tr>
+                        <tr class="eachHourLabel"><td><div>8:30</div></td></tr>
+                        <tr class="eachHourLabel"><td><div>9:00</div></td></tr>
+                        <tr class="eachHourLabel"><td><div>9:30</div></td></tr>
+                        <tr class="eachHourLabel"><td><div>10:00</div></td></tr>
+                        <tr class="eachHourLabel"><td><div>10:30</div></td></tr>
+                        <tr class="eachHourLabel"><td><div>11:00</div></td></tr>
+                        <tr class="eachHourLabel"><td><div>11:30</div></td></tr>
+                        <tr class="eachHourLabel"><td><div>12:00</div></td></tr>
+                        <tr class="eachHourLabel"><td><div>12:30</div></td></tr>
+                        <tr class="eachHourLabel"><td><div>13:00</div></td></tr>
+                        <tr class="eachHourLabel"><td><div>13:30</div></td></tr>
+                        <tr class="eachHourLabel"><td><div>14:00</div></td></tr>
+                        <tr class="eachHourLabel"><td><div>14:30</div></td></tr>
+                        <tr class="eachHourLabel"><td><div>15:00</div></td></tr>
+                        <tr class="eachHourLabel"><td><div>15:30</div></td></tr>
+                        <tr class="eachHourLabel"><td><div>16:00</div></td></tr>
+                        <tr class="eachHourLabel"><td><div>16:30</div></td></tr>
+                        <tr class="eachHourLabel"><td><div>17:00</div></td></tr>
+                        <tr class="eachHourLabel"><td><div>17:30</div></td></tr>
+                        <tr class="eachHourLabel"><td><div>18:00</div></td></tr>
+                        <tr class="eachHourLabel"><td><div>18:30</div></td></tr>
+                        <tr class="eachHourLabel"><td><div>19:00</div></td></tr>
+                        <tr class="eachHourLabel"><td><div>19:30</div></td></tr>
+                        <tr class="eachHourLabel"><td><div>20:00</div></td></tr>-->
+                    </tbody>
+                </table>
+                <table>
+                    <tbody id="arrayPlanning">
+                        <!--<tr data-time="7:00" class="eachHour"></tr>
+                        <tr data-time="7:30" class="eachHour"></tr>
+                        <tr data-time="8:00" class="eachHour"></tr>
+                        <tr data-time="8:30" class="eachHour"></tr>
+                        <tr data-time="9:00" class="eachHour"></tr>
+                        <tr data-time="9:30" class="eachHour"></tr>
+                        <tr data-time="10:00" class="eachHour"></tr>
+                        <tr data-time="10:30" class="eachHour"></tr>
+                        <tr data-time="11:00" class="eachHour"></tr>
+                        <tr data-time="11:30" class="eachHour"></tr>
+                        <tr data-time="12:00" class="eachHour"></tr>
+                        <tr data-time="12:30" class="eachHour"></tr>
+                        <tr data-time="13:00" class="eachHour"></tr>
+                        <tr data-time="13:30" class="eachHour"></tr>
+                        <tr data-time="14:00" class="eachHour"></tr>
+                        <tr data-time="14:30" class="eachHour"></tr>
+                        <tr data-time="15:00" class="eachHour"></tr>
+                        <tr data-time="15:30" class="eachHour"></tr>
+                        <tr data-time="16:00" class="eachHour"></tr>
+                        <tr data-time="16:30" class="eachHour"></tr>
+                        <tr data-time="17:00" class="eachHour"></tr>
+                        <tr data-time="17:30" class="eachHour"></tr>
+                        <tr data-time="18:00" class="eachHour"></tr>
+                        <tr data-time="18:30" class="eachHour"></tr>
+                        <tr data-time="19:00" class="eachHour"></tr>
+                        <tr data-time="19:30" class="eachHour"></tr>
+                        <tr data-time="20:00" class="eachHour"></tr>-->
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <div class="reservation">
+                    <label for="start">Heure de début : </label>
+                    <input type="time" id="start">
+                    <label for="end">Heure de fin : </label>
+                    <input type="time" id="end">
+                </div>
+                <div class="reserver">
+                    <button id="book"><div class="text_reserver">Reserver</div></button>
+                </div>
+                
+            </div>
+        </div>
+
+        <div >
+            <div class="horairePlanning">
+                <input type="date" id="date">
+                <input type="time" min="8:00" max="20:00" id="time">
+            </div>
+        </div>
+        <script>
+            /*
+            $.ajax({
+                type: 'POST',
+                url: '/book',
+                data: {
+                    idSalle:'63c9168807f074ce6dfb1b76',
+                    idStage:'LBvmfTF4lOLPscw4pcjC',
+                    start:new Date('2023-01-19 10:00'),
+                    end:new Date('2023-01-19 15:00')
+                },
+                success: function (data) {
+                    console.log(data.success)
+                }
+            });
+            */
+            
+            let salles = [];
+            let dateNow = new Date();
+            let stage = '';
+            let currentSalle = -1;
+
+            
+
+            window.onload = function(){
+                let labelTable = [];
+                let h = 7;
+                let i = 0;
+                while (true) {
+                    if (i === 60) {
+                        i = 0;
+                        h += 1;
+                        if (h === 20) {
+                            labelTable.push(h.toString() + ':' + '00')
+                            break;
+                        }
+                    }
+                    if (i === 0) labelTable.push(h.toString() + ':' + '00');
+                    else labelTable.push(h.toString() + ':' + i.toString());
+                    i += 30;
+                }
+
+                for (i in labelTable) {
+                    let tr1 = document.createElement('tr');
+                    tr1.setAttribute("data-time", labelTable[i]);
+                    tr1.classList.add("eachHour");
+                    document.getElementById("arrayPlanning").appendChild(tr1);
+
+
+                    let tr2 = document.createElement("tr");
+                    tr2.classList.add("eachHourLabel");
+                    let td = document.createElement("td");
+                    let div = document.createElement("div");
+                    div.innerHTML = labelTable[i];
+                    td.appendChild(div);
+                    tr2.appendChild(td);
+                    document.getElementById("arrayPlanningLabel").appendChild(tr2);
+                }
+
+
+
+                
+
+
+                document.getElementById("bulleInfo").style.width = window.innerWidth;
+                document.getElementById("bulleInfo").style.height = window.innerHeight * 0.75;
+
+
+
+
+
+
+                if(parseInt(dateNow.getMinutes()) < 30){
+                    dateNow.setMinutes(0, 0, 0);
+                }
+                else{
+                    dateNow.setMinutes(30, 0, 0);
+                }
+                
+                document.getElementById('date').value = dateNow.toISOString().substring(0,10);
+                document.getElementById('time').value = dateNow.toLocaleString().substring(11,16);
+
+
+                let params = new URLSearchParams(document.location.search);
+                if(params.has("stage")){
+                    stage = params.get("stage");
+                }
+
+                
+                $.ajax({
+                    type: 'POST',
+                    url: '/loadPlan',
+                    data: {
+                        date:dateNow,
+                        stage:stage
+                    },
+                    success: function (data) {
+                        console.log(data)
+                        console.log(JSON.parse(data.result1))
+                        console.log(JSON.parse(data.result2))
+                        console.log(JSON.parse(data.result3))
+                        let stageData = JSON.parse(data.result1);
+                        salles = JSON.parse(data.result2);
+                        let books = JSON.parse(data.result3);
+                        salles.forEach(element => {
+                            const found = books.find(element2 => element2.idSalle == element._id);
+                            const found2 = books.find(element2 => (element2.idSalle == element._id && element2.owner));
+                            if(found){
+                                element.free = false;
+                            }
+                            else {
+                                element.free = true;
+                            }
+                            if(found2){
+                                element.owner = true;
+                            }
+                            else {
+                                element.owner = false;
+                            }
+                        });
+                        console.log(salles)
+                        document.getElementById('myCanvas').width = parseInt(stageData[0].width);
+                        document.getElementById('myCanvas').height = parseInt(stageData[0].height);
+
+                        drawAllPolygons();
+                        /*if ((data.result1)[0].b64Img) {
+                            const byteCharacters = atob(JSON.parse(data.result1)[0].b64Img);
+                            const byteNumbers = new Array(byteCharacters.length);
+                            for (let i = 0; i < byteCharacters.length; i++) {
+                                byteNumbers[i] = byteCharacters.charCodeAt(i);
+                            }
+                            const byteArray = new Uint8Array(byteNumbers);
+                            const imgBlob = new Blob([byteArray], { type: 'image/png' });
+                            document.getElementById("backgroundImg").src = URL.createObjectURL(imgBlob)
+                            console.log(document.getElementById("backgroundImg"));
+                        }*/
+                    }
+                });
+
+                
+
+            }
+
+            /* Changement du temps */
+
+            document.getElementById('date').addEventListener('change', updateDateNow);
+            document.getElementById('time').addEventListener('change', updateDateNow);
+
+            function updateDateNow(){
+                dateNow = new Date(document.getElementById('date').value + " " + document.getElementById('time').value);
+                reloadPlan();
+                displaySalle(currentSalle);
+            }
+
+
+            /* Changement du temps 2 */
+
+            //document.getElementById('start').addEventListener('change', updateBookTime);
+            //document.getElementById('end').addEventListener('change', updateBookTime);
+
+            let testIfChangeOnBookHours = false;
+
+            function updateBookTime(){
+                let now = new Date();
+                let min = new Date();
+                min.setHours(7);
+                min.setMinutes(0);
+                let max = new Date();
+                max.setHours(20);
+                max.setMinutes(0);
+                let start = new Date(document.getElementById('date').value + " " + document.getElementById('start').value);
+                let end = new Date(document.getElementById('date').value + " " + document.getElementById('end').value);
+                console.log(start < now, start, now, end, end < now);
+                if(start < now){
+                    start = now
+                    testIfChangeOnBookHours = true;
+                }
+                if(end < now){
+                    end = now
+                    testIfChangeOnBookHours = true;
+                }
+                if(start.getHours() < min.getHours() && start.getMinutes() < min.getMinutes()){
+                    start.setHours(min.getHours());
+                    start.getMinutes(min.getMinutes());
+                    testIfChangeOnBookHours = true;
+                }
+                if(end.getHours() > max.getHours() && end.getMinutes() > max.getMinutes()){
+                    end.setHours(max.getHours());
+                    end.getMinutes(max.getMinutes());
+                    testIfChangeOnBookHours = true;
+                }
+                max.setHours(19);
+                max.setMinutes(30);
+                if(start.getHours() > max.getHours() && start.getMinutes() > max.getMinutes()){
+                    start.setHours(max.getHours());
+                    start.getMinutes(max.getMinutes());
+                    testIfChangeOnBookHours = true;
+                }
+                if(parseInt(start.getMinutes()) < 30){
+                    start.setMinutes(0, 0, 0);
+                }
+                else{
+                    start.setMinutes(30, 0, 0);
+                }
+                //document.getElementById('start').value = start.toLocaleString().substring(11,16);
+                let replaceValueStart = "";
+                if(start.getHours() < 10)replaceValueStart+='0';
+                replaceValueStart+=start.getHours()+':';
+                if(start.getMinutes() < 10)replaceValueStart+='0';
+                replaceValueStart+=start.getMinutes();
+                document.getElementById('start').value = replaceValueStart;
+
+                let replaceValueEnd = "";
+                
+                console.log(end <= start);
+                if(end <= start){
+                    end = start
+                    end.setMinutes(parseInt(end.getMinutes()) + 30);
+
+                    if(end.getHours() < 10)replaceValueEnd+='0';
+                    replaceValueEnd+=end.getHours()+':';
+                    if(end.getMinutes() < 10)replaceValueEnd+='0';
+                    replaceValueEnd+=end.getMinutes();
+                    //document.getElementById('end').value = end.toLocaleString().substring(11,16);
+                    document.getElementById('end').value = replaceValueEnd;
+
+                    
+                    testIfChangeOnBookHours = true;
+                }
+                else {
+                    if(parseInt(end.getMinutes()) < 30){
+                        end.setMinutes(0, 0, 0);
+                    }
+                    else{
+                        end.setMinutes(30, 0, 0);
+                    }
+
+                    if(end.getHours() < 10)replaceValueEnd+='0';
+                    replaceValueEnd+=end.getHours()+':';
+                    if(end.getMinutes() < 10)replaceValueEnd+='0';
+                    replaceValueEnd+=end.getMinutes();
+                    //document.getElementById('end').value = end.toLocaleString().substring(11,16);
+                    document.getElementById('end').value = replaceValueEnd;
+                }
+
+                
+            }
+
+            document.getElementById('book').addEventListener('click', bookFunc);
+
+            function bookFunc(){
+                updateBookTime()
+                if(!testIfChangeOnBookHours){
+                    if(currentSalle >= 0){
+                        let start = new Date(document.getElementById('date').value + " " + document.getElementById('start').value);
+                        let end = new Date(document.getElementById('date').value + " " + document.getElementById('end').value);
+                        console.log('start', start, 'end', end);
+                        $.ajax({
+                            type: 'POST',
+                            url: '/book',
+                            data: {
+                                idSalle:salles[currentSalle]._id,
+                                idStage:stage,
+                                start:start,
+                                end:end
+                            },
+                            success: function (data) {
+                                console.log(data.success)
+                                if(data.success){
+                                    displaySalle(currentSalle);
+                                }
+                            }
+                        });
+                    }
+                }
+                testIfChangeOnBookHours = false;
+            }
+
+
+            function reloadPlan(){
+                $.ajax({
+                    type: 'POST',
+                    url: '/loadPlan',
+                    data: {
+                        date:dateNow,
+                        stage:stage
+                    },
+                    success: function (data) {
+                        console.log(data)
+                        console.log(JSON.parse(data.result1))
+                        console.log(JSON.parse(data.result2))
+                        console.log(JSON.parse(data.result3))
+                        salles = JSON.parse(data.result2);
+                        let books = JSON.parse(data.result3);
+                        salles.forEach(element => {
+                            const found = books.find(element2 => element2.idSalle == element._id);
+                            const found2 = books.find(element2 => (element2.idSalle == element._id && element2.owner));
+                            if(found){
+                                element.free = false;
+                            }
+                            else {
+                                element.free = true;
+                            }
+                            if(found2){
+                                element.owner = true;
+                            }
+                            else {
+                                element.owner = false;
+                            }
+                        });
+                        drawAllPolygons();
+                    }
+                });
+            }
+
+
+
+
+
+
+
+
+            /* Affichage du planning */
+
+            var canvas = document.getElementById("myCanvas");
+            
+            var selected = 0;
+            var hovering = false;
+            var clicking = false;
+
+            var ctx = canvas.getContext("2d");
+
+
+            //Fonction pour dessiner tous les polygons de la liste
+            function drawAllPolygons(){
+                //ctx.clearRect(0 - canvas.offsetLeft, 0  - canvas.offsetTop, canvas.width - canvas.offsetLeft, canvas.height  - canvas.offsetTop);
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                ctx.lineWidth = 5; // augmente l'épaisseur des lignes
+                for (let i = 0; i < salles.length; i++) {
+                    if(salles[i].free){
+                        ctx.fillStyle = "#bfe3b4";
+                    }else {
+                        
+                        if(salles[i].owner){
+                            ctx.fillStyle = "#96b0bc";
+                        }
+                        else {
+                            ctx.fillStyle = "#e35c38";
+                        }
+                    }
+                    ctx.font = "20px Arial";
+                    ctx.beginPath();
+                    ctx.moveTo(salles[i].tab[0][0], salles[i].tab[0][1]);
+                    for (var j = 1; j < salles[i].tab.length; j++) {
+                        ctx.lineTo(salles[i].tab[j][0], salles[i].tab[j][1]);
+                    }
+                    ctx.closePath();
+                    ctx.stroke();
+                    ctx.fill();
+                        ctx.restore();
+
+                    //Ajoute le text
+                    var nom = salles[i].nom;
+                    ctx.fillStyle = "#000000";
+                    var bounds = getBounds(salles[i].tab);
+                    var xText = bounds.left + (bounds.right - bounds.left) / 2;
+                    var yText = bounds.top + (bounds.bottom - bounds.top) / 2;
+                    //ctx.fillText(nom, xText, yText);
+                    ctx.fillText(nom, salles[i].tab[0][0] + 15 , salles[i].tab[0][1] + 30);
+                        ctx.restore();
+
+                    if(salles[i].proj) ctx.fillText('📽️', salles[i].tab[0][0] + 15 , salles[i].tab[0][1] + 50);
+                    
+
+
+                    // Dessiner les sommets du polygone
+                    for (let j = 0; j < salles[i].tab.length; j++) {
+                        ctx.fillStyle = "#000";
+                        ctx.beginPath();
+                        ctx.arc(salles[i].tab[j][0], salles[i].tab[j][1], 5, 0, 2 * Math.PI);
+                        ctx.fill();
+                        ctx.restore();
+                    }
+                }
+                ctx.restore();
+            }
+
+
+
+
+            // Gestion de l'événement pour sélectionner un sommet ou une arête
+            canvas.addEventListener('mousedown', function(event) {
+                /*var x = event.clientX - canvas.offsetLeft;
+                var y = event.clientY - canvas.offsetTop;*/
+                let rect = canvas.getBoundingClientRect();
+                let x = event.clientX - rect.left;
+                let y = event.clientY - rect.top;
+                console.log(x, y)
+                clicking = false;
+                selected = 0;
+                for (let i = 0; i < salles.length; i++) {
+                    ctx.beginPath();
+                    ctx.moveTo(salles[i].tab[0][0], salles[i].tab[0][1]);
+
+                    for (var j = 0; j < salles[i].tab.length; j++) {
+                    ctx.lineTo(salles[i].tab[j][0], salles[i].tab[j][1]);
+                    }
+                    ctx.closePath();
+                    // Vérifie si les coordonnées de la souris sont contenues dans le polygone
+                    if (ctx.isPointInPath(x, y)) {
+                        selected = i;
+                        clicking = true;
+                    }
+                                        
+                }
+                if(clicking){
+                    currentSalle = selected;
+                    displaySalle(selected);
+                }
+                else{
+                    hideSalle();
+                    currentSalle = -1;
+                }
+            });
+
+            // Gestion de l'événement pour déplacer le polygone ou redimensionner les sommets ou les arêtes
+            /*canvas.addEventListener('mousemove', function(event) {
+                let rect = canvas.getBoundingClientRect();
+                let x = event.clientX - rect.left;
+                let y = event.clientY - rect.top;
+                hovering = false;
+                selected = 0;
+                for (let i = 0; i < salles.length; i++) {
+                    ctx.beginPath();
+                    ctx.moveTo(salles[i].tab[0][0], salles[i].tab[0][1]);
+
+                    for (var j = 0; j < salles[i].tab.length; j++) {
+                    ctx.lineTo(salles[i].tab[j][0], salles[i].tab[j][1]);
+                    }
+                    ctx.closePath();
+                    // Vérifie si les coordonnées de la souris sont contenues dans le polygone
+                    if (ctx.isPointInPath(x, y)) {
+                        selected = i;
+                        hovering = true;
+                    }
+                                        
+                }
+                if(hovering){
+                    displaySalle(selected);
+                }
+                else{
+                    hideSalle();
+                }
+            });*/
+
+
+            
+            function getBounds(polygon) {
+                var left = polygon[0][0];
+                var right = polygon[0][0];
+                var top = polygon[0][1];
+                var bottom = polygon[0][1];
+                for (var i = 1; i < polygon.length; i++) {
+                    if (polygon[i][0] < left) {
+                        left = polygon[i][0];
+                    }
+                    if (polygon[i][0] > right) {
+                        right = polygon[i][0];
+                    }
+                    if (polygon[i][1] < top) {
+                        top = polygon[i][1];
+                    }
+                    if (polygon[i][1] > bottom) {
+                        bottom = polygon[i][1];
+                    }
+                }
+                return {left: left, right: right, top: top, bottom: bottom};
+            }
+
+
+
+
+
+            function displaySalle(i){
+                if(i >= 0){
+                    salle = salles[i];
+                    document.getElementById('bulleInfo').style.visibility = "visible";
+                    document.getElementById('name').innerText = salle.nom;
+                    document.getElementById('nb').innerText = salle.places;
+                    let textProj = 'Non';
+                    if(salle.proj) textProj = 'Oui'
+                    document.getElementById('proj').innerText = textProj;
+
+                    document.getElementById('day').innerText = dateNow.toLocaleDateString('fr-FR',{
+                                                                                                weekday: 'long',
+                                                                                                year: 'numeric',
+                                                                                                month: 'long',
+                                                                                                day: 'numeric'});
+
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/loadSchedule',
+                        data: {
+                            date:dateNow,
+                            salle:salles[i]._id
+                        },
+                        success: function (data) {
+                            console.log(data)
+                            console.log(JSON.parse(data.result))
+                            let books = JSON.parse(data.result);
+                            let listCases = Array.from(document.getElementsByClassName('eachHour'));
+                            console.log(listCases);
+                            
+                            listCases.forEach(element => {
+
+                                let testBool = false;
+                                books.forEach(element2 => {
+                                    console.log((new Date(1674118800000) <= new Date(document.getElementById('date').value + ' ' + element.dataset.time) && new Date(1674136800000) >= new Date(document.getElementById('date').value + ' ' + element.dataset.time)));
+                                    if(new Date(element2.start) <= new Date(document.getElementById('date').value + ' ' + element.dataset.time) && new Date(element2.end) > new Date(document.getElementById('date').value + ' ' + element.dataset.time)){
+                                        testBool = true
+                                    }
+                                });
+                                if(testBool){
+                                    element.style.backgroundColor = 'red';
+                                    const found2 = books.find(element2 => element2.owner);
+                                
+                                    if(found2){
+                                        element.style.backgroundColor = 'blue';
+                                    }
+                                }
+                                else {
+                                    element.style.backgroundColor = 'green';
+                                }
+
+                                
+                                
+                            });
+                            document.getElementById('bulleInfo').scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"});
+                        }
+                    });
+                }
+            }
+
+            function hideSalle(){
+                document.getElementById('bulleInfo').style.visibility = "hidden";
+            }
+        </script>
+    </body>
+
+</html>

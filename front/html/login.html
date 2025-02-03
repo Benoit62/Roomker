@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Login</title>
+    <!-- the form awesome library is used to add icons to our form -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+    <!-- include the stylesheet file -->
+    <link rel="stylesheet" href="../css/login.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <div class="hero">
+        <video autoplay loop muted plays-inline class="back-video">
+            <source src="../assets/video_login.mp4" type="video/mp4">
+        </video>
+
+        <div class="login">
+            <h1>Login</h1>
+            <form action="/auth" method="post">
+                <label for="mail">
+                    <!-- font awesome icon -->
+                    <i class="fas fa-user"></i>
+                </label>
+                <input type="text" name="mail" placeholder="Email" id="mail" required>
+                <label for="password">
+                    <i class="fas fa-lock"></i>
+                </label>
+                <input type="password" name="password" placeholder="Password" id="password" required>
+                <p id="error"></p>
+                <h3>Don't have an account ? <a id="reg" href="#">Register</a></h3>
+                <input type="submit" value="Login">
+            </form>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $("form").submit(function (event) {
+                event.preventDefault();
+                var formData = {
+                    'mail': $('input[name=mail]').val(),
+                    'password': $('input[name=password]').val()
+                };
+                $.ajax({
+                    type: 'POST',
+                    url: '/auth',
+                    data: formData,
+                    success: function () {
+                        window.location.href = "/home";
+                    },
+                    error: function () {
+                        document.getElementById("error").innerHTML = "Wrong mail/password combination";
+                        document.getElementById("mail").value = "";
+                        document.getElementById("password").value = "";
+                    }
+                });
+            });
+            $("#reg").click(function () {
+                $.ajax({
+                    type: "GET",
+                    url: "/reg",
+                    success: function (data) {
+                        $("body").html(data);
+                    },
+                    error: function () {
+                        alert("An error occurred while trying to load register");
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
